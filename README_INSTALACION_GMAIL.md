@@ -1,7 +1,7 @@
 # Instalación en Gmail
 
 1. Abre `generador_firmas.html` en el navegador.
-2. Cambia los datos del empleado en el formulario.
+2. Completa nombre, cargo, teléfono y correo. Los datos corporativos ya están configurados.
 3. Pulsa `Copiar firma para Gmail`.
 4. En Gmail, abre `Configuración` > `Ver toda la configuración` > `Firma`.
 5. Crea una firma nueva o edita una existente y pega el contenido copiado.

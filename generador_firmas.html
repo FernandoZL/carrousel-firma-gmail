@@ -159,25 +159,16 @@
     <form id="datos">
       <h1>Generador de firmas Carrousel</h1>
       <label>Nombre
-        <input name="nombre" placeholder="Ej. ROCÍO CASTRO">
+        <input name="nombre" placeholder="Escribe tu nombre completo">
       </label>
       <label>Cargo
-        <input name="cargo" placeholder="Ej. Gerente de Gestión Humana">
-      </label>
-      <label>Empresa
-        <input name="empresa" value="Corporación Carrousel, S.A.">
+        <input name="cargo" placeholder="Escribe tu cargo">
       </label>
       <label>Teléfono
         <input name="telefono" placeholder="Ej. 3001-1955">
       </label>
       <label>Correo
         <input name="correo" placeholder="Ej. nombre.apellido@carrousel.com.gt">
-      </label>
-      <label>Dirección
-        <input name="direccion" placeholder="Ej. 15 calle A 7-53 zona 9, Guatemala">
-      </label>
-      <label>Slogan
-        <input name="slogan" value="¡Somos alegría!">
       </label>
       <div class="actions">
         <button type="button" id="copiar">Copiar firma para Gmail</button>
@@ -224,12 +215,17 @@
     const form = document.getElementById("datos");
     const preview = document.getElementById("preview");
     const copyStatus = document.getElementById("copyStatus");
+    const fixedData = Object.freeze({
+      empresa: "Corporación Carrousel, S.A.",
+      direccion: "15 calle A 7-53 zona 9, Guatemala",
+      slogan: "¡Somos alegría!"
+    });
     let generatedHtml = "";
     function esc(value) {
       return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
     }
     function render() {
-      const data = Object.fromEntries(new FormData(form).entries());
+      const data = { ...fixedData, ...Object.fromEntries(new FormData(form).entries()) };
       const telLink = String(data.telefono || "").replace(/[^\d+]/g, "");
       const html = template
         .replaceAll("{NOMBRE}", esc(data.nombre))
@@ -239,7 +235,7 @@
         .replaceAll("{TELEFONO_LINK}", esc(telLink))
         .replaceAll("{CORREO}", esc(data.correo))
         .replaceAll("{DIRECCION}", esc(data.direccion))
-        .replaceAll("{SLOGAN}", esc(data.slogan || "¡Somos alegría!"));
+        .replaceAll("{SLOGAN}", esc(data.slogan));
       preview.innerHTML = html;
       generatedHtml = html;
       copyStatus.classList.remove("is-visible");

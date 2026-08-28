@@ -13,6 +13,23 @@ La plantilla `firma_gmail.html` conserva estas variables:
 {SLOGAN}
 ```
 
+En el generador, el usuario solo edita:
+
+```text
+NOMBRE
+CARGO
+TELEFONO
+CORREO
+```
+
+Los datos corporativos permanecen fijos:
+
+```text
+EMPRESA = Corporación Carrousel, S.A.
+DIRECCION = 15 calle A 7-53 zona 9, Guatemala
+SLOGAN = ¡Somos alegría!
+```
+
 Valores usados para la prueba:
 
 ```text
