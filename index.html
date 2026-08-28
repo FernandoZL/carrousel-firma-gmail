@@ -51,6 +51,35 @@
       color: #172033;
       background: #ffffff;
     }
+    .email-control {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-top: 6px;
+      border: 1px solid #cdd7e6;
+      border-radius: 6px;
+      background: #ffffff;
+    }
+    .email-control:focus-within {
+      border-color: #1267cf;
+      box-shadow: 0 0 0 2px rgba(18, 103, 207, .12);
+    }
+    .email-control input {
+      flex: 1 1 auto;
+      min-width: 0;
+      margin: 0;
+      border: 0;
+      padding-right: 4px;
+      outline: 0;
+    }
+    .email-domain {
+      flex: 0 0 auto;
+      padding-right: 12px;
+      font-size: 16px;
+      font-weight: 400;
+      color: #172033;
+      white-space: nowrap;
+    }
     .actions {
       display: grid;
       grid-template-columns: 1fr;
@@ -175,10 +204,13 @@
         <input name="cargo" placeholder="Escribe tu cargo" autocomplete="organization-title">
       </label>
       <label>Teléfono
-        <input name="telefono" type="tel" inputmode="tel" placeholder="Ej. 3001-1955" autocomplete="tel">
+        <input name="telefono" type="tel" inputmode="tel" placeholder="Escribe el teléfono" autocomplete="tel">
       </label>
       <label>Correo
-        <input name="correo" type="email" inputmode="email" placeholder="Ej. nombre.apellido@carrousel.com.gt" autocomplete="email" autocapitalize="none" spellcheck="false">
+        <span class="email-control">
+          <input name="correo" type="text" inputmode="email" placeholder="nombre.apellido" autocomplete="email" autocapitalize="none" spellcheck="false" aria-label="Usuario del correo corporativo">
+          <span class="email-domain">@carrousel.com.gt</span>
+        </span>
       </label>
       <div class="actions">
         <button type="button" id="copiar">Copiar firma para Gmail</button>
@@ -234,6 +266,7 @@
     });
     const lowercaseJobWords = new Set(["a", "al", "con", "de", "del", "e", "el", "en", "la", "las", "los", "para", "por", "y"]);
     const jobAcronyms = new Set(["BI", "CEO", "CFO", "CIO", "CMO", "COO", "CRM", "CTO", "ERP", "IT", "QA", "RRHH", "TI"]);
+    const emailDomain = "@carrousel.com.gt";
     let generatedHtml = "";
     function esc(value) {
       return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
@@ -257,8 +290,12 @@
       const localDigits = digits.length === 11 && digits.startsWith("502") ? digits.slice(3) : digits;
       return localDigits.length === 8 ? `${localDigits.slice(0, 4)}-${localDigits.slice(4)}` : localDigits;
     }
+    function normalizeEmailLocal(value) {
+      return normalizeSpaces(value).replace(/\s/g, "").toLocaleLowerCase("en-US").split("@")[0];
+    }
     function normalizeEmail(value) {
-      return normalizeSpaces(value).replace(/\s/g, "").toLocaleLowerCase("en-US");
+      const localPart = normalizeEmailLocal(value);
+      return localPart ? `${localPart}${emailDomain}` : "";
     }
     function measureNameWidth(value, fontSize) {
       if (!nameMeasureContext) return value.length * fontSize * 0.62;
@@ -309,9 +346,10 @@
         correo: normalizeEmail(rawData.correo)
       };
       if (updateFields) {
-        for (const fieldName of ["nombre", "cargo", "telefono", "correo"]) {
+        for (const fieldName of ["nombre", "cargo", "telefono"]) {
           form.elements[fieldName].value = data[fieldName];
         }
+        form.elements.correo.value = normalizeEmailLocal(rawData.correo);
       }
       return data;
     }

@@ -44,6 +44,7 @@ Antes de copiar o descargar la firma, el generador:
 - aplica capitalización uniforme al cargo y conserva siglas comunes;
 - convierte teléfonos locales o con prefijo `502` al formato `0000-0000`;
 - convierte el correo a minúsculas y elimina espacios internos;
+- fija el dominio corporativo `@carrousel.com.gt`, aunque el usuario pegue un correo completo;
 - usa el número completo con código `502` para el enlace de WhatsApp.
 
 Valores usados para la prueba:
