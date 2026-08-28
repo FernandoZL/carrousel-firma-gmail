@@ -4,6 +4,9 @@ La plantilla `firma_gmail.html` conserva estas variables:
 
 ```text
 {NOMBRE}
+{NOMBRE_SIZE}
+{NOMBRE_LINE_HEIGHT}
+{NOMBRE_TOP_SPACE}
 {CARGO}
 {EMPRESA}
 {TELEFONO}
@@ -37,6 +40,7 @@ Antes de copiar o descargar la firma, el generador:
 
 - elimina espacios sobrantes y caracteres invisibles;
 - convierte el nombre a mayúsculas;
+- ajusta el tamaño del nombre y lo divide en dos líneas cuando no cabe en una sola;
 - aplica capitalización uniforme al cargo y conserva siglas comunes;
 - convierte teléfonos locales o con prefijo `502` al formato `0000-0000`;
 - convierte el correo a minúsculas y elimina espacios internos;
