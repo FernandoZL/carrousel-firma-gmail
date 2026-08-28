@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generador de firmas Carrousel</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    h1 {
+      font-size: 22px;
+      line-height: 1.2;
+      margin: 0 0 18px;
+      color: #342c61;
+    }
+    form {
+      background: #ffffff;
+      border: 1px solid #dbe2ef;
+      border-radius: 8px;
+      padding: 18px;
+    }
+    label {
+      display: block;
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #342c61;
+    }
+    input {
+      width: 100%;
+      margin-top: 6px;
+      border: 1px solid #cdd7e6;
+      border-radius: 6px;
+      padding: 9px 10px;
+      font: 14px Arial, Helvetica, sans-serif;
+      color: #172033;
+      background: #ffffff;
+    }
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    button {
+      border: 0;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font: 700 14px Arial, Helvetica, sans-serif;
+      cursor: pointer;
+      background: #1267cf;
+      color: #ffffff;
+    }
+    button.secondary {
+      background: #342c61;
+    }
+    .preview-wrap {
+      min-width: 0;
+    }
+    .preview-surface {
+      width: max-content;
+      background: #ffffff;
+      border: 1px solid #dbe2ef;
+      padding: 16px;
+      overflow: auto;
+    }
+    textarea {
+      width: 100%;
+      min-height: 170px;
+      margin-top: 14px;
+      border: 1px solid #cdd7e6;
+      border-radius: 6px;
+      padding: 10px;
+      font: 12px Consolas, "Courier New", monospace;
+      resize: vertical;
+    }
+    @media (max-width: 860px) {
+      main { grid-template-columns: 1fr; padding: 18px; }
+      .preview-surface { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <form id="datos">
+      <h1>Generador de firmas Carrousel</h1>
+      <label>Nombre
+        <input name="nombre" value="ROCÍO CASTRO">
+      </label>
+      <label>Cargo
+        <input name="cargo" value="Gerente de Gestión Humana">
+      </label>
+      <label>Empresa
+        <input name="empresa" value="Corporación Carrousel, S.A.">
+      </label>
+      <label>Teléfono
+        <input name="telefono" value="3001-1955">
+      </label>
+      <label>Correo
+        <input name="correo" value="rocio.castro@carrousel.com.gt">
+      </label>
+      <label>Dirección
+        <input name="direccion" value="15 calle A 7-53 zona 9, Guatemala">
+      </label>
+      <label>Slogan
+        <input name="slogan" value="¡Somos alegría!">
+      </label>
+      <div class="actions">
+        <button type="button" id="copiar">Copiar firma para Gmail</button>
+        <button type="button" id="descargar" class="secondary">Descargar HTML generado</button>
+      </div>
+    </form>
+    <section class="preview-wrap">
+      <div class="preview-surface" id="preview"></div>
+      <textarea id="codigo" readonly aria-label="HTML generado"></textarea>
+    </section>
+  </main>
+
+  <script>
+    const template = String.raw`<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="400" style="width:400px; height:200px; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; background:#ffffff; font-family:Montserrat, Arial, Helvetica, sans-serif;">
+  <tr><td width="400" height="159" valign="top" style="width:400px; height:159px; padding:0; margin:0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="400" style="width:400px; border-collapse:collapse;"><tr><td width="12" height="159" style="width:12px; height:159px; font-size:0; line-height:0;">&nbsp;</td><td width="179" height="159" valign="top" style="width:179px; height:159px; padding:0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="179" style="width:179px; border-collapse:collapse;"><tr><td height="39" style="height:39px; font-size:0; line-height:0;">&nbsp;</td></tr><tr><td width="179" height="108" valign="middle" align="center" style="width:179px; height:108px; padding:0;"><img alt="Carrousel" src="https://drive.google.com/thumbnail?id=10wDyr5nlIfqjMmOociguZfsWFHeGnTuq&amp;sz=w1600" width="179" height="101" style="width:179px; height:101px; display:block; border:0; outline:none; text-decoration:none;"></td></tr></table></td><td width="4" height="159" style="width:4px; height:159px; font-size:0; line-height:0;">&nbsp;</td><td width="2" height="159" valign="top" style="width:2px; height:159px; padding:0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="2" style="width:2px; border-collapse:collapse;"><tr><td height="26" style="height:26px; font-size:0; line-height:0;">&nbsp;</td></tr><tr><td width="2" height="128" bgcolor="#1267cf" style="width:2px; height:128px; background:#1267cf; font-size:0; line-height:0;">&nbsp;</td></tr></table></td><td width="12" height="159" style="width:12px; height:159px; font-size:0; line-height:0;">&nbsp;</td><td width="191" height="159" valign="top" style="width:191px; height:159px; padding:0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="191" style="width:191px; border-collapse:collapse; font-family:Montserrat, Arial, Helvetica, sans-serif;"><tr><td height="36" style="height:36px; font-size:0; line-height:0;">&nbsp;</td></tr><tr><td style="padding:0; margin:0; font-family:'VAGRoundedNextShine-Regular','Arial Rounded MT Bold',Arial,Helvetica,sans-serif; font-size:24px; line-height:29px; font-weight:400; color:#342c61; white-space:nowrap;">{NOMBRE}</td></tr><tr><td style="padding:0; margin:0; font-family:'VAGRoundedNextShine-Regular','Arial Rounded MT Bold',Arial,Helvetica,sans-serif; font-size:12px; line-height:16px; font-weight:400; color:#099acb; white-space:nowrap;">{CARGO}</td></tr><tr><td style="padding:0; margin:0; font-family:Montserrat, Arial, Helvetica, sans-serif; font-size:8.5px; line-height:16px; font-weight:400; color:#099acb; white-space:nowrap;">{EMPRESA}</td></tr><tr><td height="6" style="height:6px; font-size:0; line-height:0;">&nbsp;</td></tr><tr><td style="padding:0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr><td width="12" height="14" valign="top" style="width:12px; height:14px; padding:0;"><img alt="" src="https://media-public.canva.com/DJJ5c/MAFkYODJJ5c/1/t.png" width="11" height="11" style="width:11px; height:11px; display:block; border:0;"></td><td width="4" style="width:4px; font-size:0; line-height:0;">&nbsp;</td><td height="14" style="height:14px; padding:0; font-family:Montserrat, Arial, Helvetica, sans-serif; font-size:8.5px; line-height:13.5px; font-weight:400; color:#2662b5; white-space:nowrap;"><a href="tel:{TELEFONO_LINK}" style="color:#2662b5; text-decoration:none;">{TELEFONO}</a></td></tr><tr><td width="12" height="14" valign="top" style="width:12px; height:14px; padding:0;"><img alt="" src="https://media-public.canva.com/NDCS0/MAGOMKNDCS0/1/t.png" width="11" height="11" style="width:11px; height:11px; display:block; border:0;"></td><td width="4" style="width:4px; font-size:0; line-height:0;">&nbsp;</td><td height="14" style="height:14px; padding:0; font-family:Montserrat, Arial, Helvetica, sans-serif; font-size:8.5px; line-height:13.5px; font-weight:400; color:#2662b5; white-space:nowrap;"><a href="mailto:{CORREO}" style="color:#2662b5; text-decoration:none;">{CORREO}</a></td></tr><tr><td width="12" height="14" valign="top" style="width:12px; height:14px; padding:0;"><img alt="" src="https://media-public.canva.com/1stEg/MAGL8H1stEg/1/t.png" width="12" height="12" style="width:12px; height:12px; display:block; border:0;"></td><td width="4" style="width:4px; font-size:0; line-height:0;">&nbsp;</td><td height="14" style="height:14px; padding:0; font-family:Montserrat, Arial, Helvetica, sans-serif; font-size:8.5px; line-height:13.5px; font-weight:400; color:#2662b5; white-space:nowrap;">{DIRECCION}</td></tr></table></td></tr></table></td></tr></table></td></tr>
+  <tr><td height="7" style="height:7px; padding:0; font-size:0; line-height:0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="400" style="width:400px; border-collapse:collapse;"><tr><td width="33" style="width:33px; font-size:0; line-height:0;">&nbsp;</td><td width="99" height="6" bgcolor="#1267cf" style="width:99px; height:6px; background:#1267cf; font-size:0; line-height:0;">&nbsp;</td><td width="82" height="6" bgcolor="#e70a78" style="width:82px; height:6px; background:#e70a78; font-size:0; line-height:0;">&nbsp;</td><td width="86" height="6" bgcolor="#7bb900" style="width:86px; height:6px; background:#7bb900; font-size:0; line-height:0;">&nbsp;</td><td width="76" height="6" bgcolor="#ffb000" style="width:76px; height:6px; background:#ffb000; font-size:0; line-height:0;">&nbsp;</td><td width="24" style="width:24px; font-size:0; line-height:0;">&nbsp;</td></tr></table></td></tr>
+  <tr><td height="34" valign="top" style="height:34px; padding:0;"><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="400" style="width:400px; border-collapse:collapse;"><tr><td width="139" style="width:139px; font-size:0; line-height:0;">&nbsp;</td><td width="100" valign="top" style="width:100px; padding:0; font-family:Montserrat, Arial, Helvetica, sans-serif; font-size:8.5px; line-height:16px; font-weight:400; color:#099acb; white-space:nowrap;">{SLOGAN}</td><td width="16" valign="top" align="center" style="width:16px; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:21px; line-height:20px; font-weight:700; color:#f7c331;">★</td><td width="147" style="width:147px; font-size:0; line-height:0;">&nbsp;</td></tr></table></td></tr>
+</table>`;
+    const form = document.getElementById("datos");
+    const preview = document.getElementById("preview");
+    const codigo = document.getElementById("codigo");
+    function esc(value) {
+      return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    }
+    function render() {
+      const data = Object.fromEntries(new FormData(form).entries());
+      const telLink = String(data.telefono || "").replace(/[^\d+]/g, "");
+      const html = template
+        .replaceAll("{NOMBRE}", esc(data.nombre))
+        .replaceAll("{CARGO}", esc(data.cargo))
+        .replaceAll("{EMPRESA}", esc(data.empresa))
+        .replaceAll("{TELEFONO}", esc(data.telefono))
+        .replaceAll("{TELEFONO_LINK}", esc(telLink))
+        .replaceAll("{CORREO}", esc(data.correo))
+        .replaceAll("{DIRECCION}", esc(data.direccion))
+        .replaceAll("{SLOGAN}", esc(data.slogan || "¡Somos alegría!"));
+      preview.innerHTML = html;
+      codigo.value = html;
+    }
+    form.addEventListener("input", render);
+    document.getElementById("copiar").addEventListener("click", async () => {
+      render();
+      const range = document.createRange();
+      range.selectNodeContents(preview);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      document.execCommand("copy");
+      selection.removeAllRanges();
+    });
+    document.getElementById("descargar").addEventListener("click", () => {
+      render();
+      const blob = new Blob([codigo.value], { type: "text/html;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "firma_gmail_generada.html";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+    render();
+  </script>
+</body>
+</html>
