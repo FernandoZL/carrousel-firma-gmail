@@ -8,6 +8,7 @@ Proyecto estático para crear firmas HTML reutilizables para Gmail con el diseñ
 - `generador_firmas.html`: misma herramienta, conservada con el nombre original del entregable.
 - `preview_1a1.html`: vista de comparación 400 x 200.
 - `firma_gmail.html`: plantilla HTML base para Gmail.
+- `manual_usuario.html`: instrucciones para que cada usuario instale su firma en Gmail.
 - `README_INSTALACION_GMAIL.md`: pasos para instalar la firma en Gmail.
 - `README_VARIABLES.md`: variables disponibles y tipografías detectadas.
 - `RECURSOS_REMOTOS.md`: URLs de logo e iconos.

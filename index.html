@@ -69,6 +69,32 @@
     button.secondary {
       background: #342c61;
     }
+    .help-card {
+      margin-top: 18px;
+      border-top: 1px solid #dbe2ef;
+      padding-top: 16px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #32415c;
+    }
+    .help-card h2 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      line-height: 1.25;
+      color: #342c61;
+    }
+    .help-card ol {
+      margin: 0 0 12px 18px;
+      padding: 0;
+    }
+    .help-card li {
+      margin-bottom: 5px;
+    }
+    .manual-link {
+      color: #1267cf;
+      font-weight: 700;
+      text-decoration: none;
+    }
     .preview-wrap {
       min-width: 0;
     }
@@ -123,6 +149,17 @@
       <div class="actions">
         <button type="button" id="copiar">Copiar firma para Gmail</button>
         <button type="button" id="descargar" class="secondary">Descargar HTML generado</button>
+      </div>
+      <div class="help-card">
+        <h2>Cómo instalarla en Gmail</h2>
+        <ol>
+          <li>Completa tus datos.</li>
+          <li>Haz clic en Copiar firma para Gmail.</li>
+          <li>Abre Gmail y entra a Configuración.</li>
+          <li>En Firma, crea una nueva y pega la firma.</li>
+          <li>Guarda los cambios.</li>
+        </ol>
+        <a class="manual-link" href="manual_usuario.html" target="_blank" rel="noopener">Ver manual completo</a>
       </div>
     </form>
     <section class="preview-wrap">
