@@ -105,15 +105,40 @@
       padding: 16px;
       overflow: auto;
     }
-    textarea {
-      width: 100%;
-      min-height: 170px;
+    .copy-status {
+      display: none;
       margin-top: 14px;
-      border: 1px solid #cdd7e6;
-      border-radius: 6px;
-      padding: 10px;
-      font: 12px Consolas, "Courier New", monospace;
-      resize: vertical;
+      border: 1px solid #b9e0c7;
+      border-left: 5px solid #28a745;
+      border-radius: 8px;
+      background: #f1fbf4;
+      padding: 16px 18px;
+      color: #1f3b29;
+    }
+    .copy-status.is-visible {
+      display: block;
+    }
+    .copy-status h2 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.25;
+      color: #237a39;
+    }
+    .copy-status p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .copy-status ol {
+      margin: 0 0 12px 20px;
+      padding: 0;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .copy-status a {
+      color: #1267cf;
+      font-weight: 700;
+      text-decoration: none;
     }
     @media (max-width: 860px) {
       main { grid-template-columns: 1fr; padding: 18px; }
@@ -164,7 +189,17 @@
     </form>
     <section class="preview-wrap">
       <div class="preview-surface" id="preview"></div>
-      <textarea id="codigo" readonly aria-label="HTML generado"></textarea>
+      <div class="copy-status" id="copyStatus" role="status" aria-live="polite">
+        <h2>Firma copiada correctamente</h2>
+        <p>Ahora pégala en Gmail para dejarla activa en tu correo.</p>
+        <ol>
+          <li>Abre Gmail y entra a Configuración.</li>
+          <li>Selecciona Ver toda la configuración.</li>
+          <li>En Firma, crea una firma nueva y pega lo copiado.</li>
+          <li>Elige esa firma para correos nuevos y guarda los cambios.</li>
+        </ol>
+        <a href="manual_usuario.html" target="_blank" rel="noopener">Ver instrucciones completas</a>
+      </div>
     </section>
   </main>
 
@@ -176,7 +211,8 @@
 </table>`;
     const form = document.getElementById("datos");
     const preview = document.getElementById("preview");
-    const codigo = document.getElementById("codigo");
+    const copyStatus = document.getElementById("copyStatus");
+    let generatedHtml = "";
     function esc(value) {
       return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
     }
@@ -193,7 +229,8 @@
         .replaceAll("{DIRECCION}", esc(data.direccion))
         .replaceAll("{SLOGAN}", esc(data.slogan || "¡Somos alegría!"));
       preview.innerHTML = html;
-      codigo.value = html;
+      generatedHtml = html;
+      copyStatus.classList.remove("is-visible");
     }
     form.addEventListener("input", render);
     document.getElementById("copiar").addEventListener("click", async () => {
@@ -205,10 +242,12 @@
       selection.addRange(range);
       document.execCommand("copy");
       selection.removeAllRanges();
+      copyStatus.classList.add("is-visible");
+      copyStatus.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
     document.getElementById("descargar").addEventListener("click", () => {
       render();
-      const blob = new Blob([codigo.value], { type: "text/html;charset=utf-8" });
+      const blob = new Blob([generatedHtml], { type: "text/html;charset=utf-8" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = "firma_gmail_generada.html";
