@@ -7,9 +7,10 @@ La plantilla `firma_gmail.html` conserva estas variables:
 {CARGO}
 {EMPRESA}
 {TELEFONO}
-{TELEFONO_LINK}
+{WHATSAPP_LINK}
 {CORREO}
 {DIRECCION}
+{WAZE_URL}
 {SLOGAN}
 ```
 
@@ -37,9 +38,10 @@ NOMBRE = ROCÍO CASTRO
 CARGO = Gerente de Gestión Humana
 EMPRESA = Corporación Carrousel, S.A.
 TELEFONO = 3001-1955
-TELEFONO_LINK = 30011955
+WHATSAPP_LINK = https://wa.me/50230011955
 CORREO = rocio.castro@carrousel.com.gt
 DIRECCION = 15 Calle A 7-53, Zona 9, Guatemala
+WAZE_URL = enlace corporativo de Waze
 SLOGAN = ¡Somos alegría!
 ```
 
