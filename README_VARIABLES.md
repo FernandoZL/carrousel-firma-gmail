@@ -26,7 +26,7 @@ Los datos corporativos permanecen fijos:
 
 ```text
 EMPRESA = Corporación Carrousel, S.A.
-DIRECCION = 15 calle A 7-53 zona 9, Guatemala
+DIRECCION = 15 Calle A 7-53, Zona 9, Guatemala
 SLOGAN = ¡Somos alegría!
 ```
 
@@ -39,7 +39,7 @@ EMPRESA = Corporación Carrousel, S.A.
 TELEFONO = 3001-1955
 TELEFONO_LINK = 30011955
 CORREO = rocio.castro@carrousel.com.gt
-DIRECCION = 15 calle A 7-53 zona 9, Guatemala
+DIRECCION = 15 Calle A 7-53, Zona 9, Guatemala
 SLOGAN = ¡Somos alegría!
 ```
 
