@@ -169,16 +169,16 @@
     <form id="datos">
       <h1>Generador de firmas Carrousel</h1>
       <label>Nombre
-        <input name="nombre" placeholder="Escribe tu nombre completo">
+        <input name="nombre" placeholder="Escribe tu nombre completo" autocomplete="name">
       </label>
       <label>Cargo
-        <input name="cargo" placeholder="Escribe tu cargo">
+        <input name="cargo" placeholder="Escribe tu cargo" autocomplete="organization-title">
       </label>
       <label>Teléfono
-        <input name="telefono" placeholder="Ej. 3001-1955">
+        <input name="telefono" type="tel" inputmode="tel" placeholder="Ej. 3001-1955" autocomplete="tel">
       </label>
       <label>Correo
-        <input name="correo" placeholder="Ej. nombre.apellido@carrousel.com.gt">
+        <input name="correo" type="email" inputmode="email" placeholder="Ej. nombre.apellido@carrousel.com.gt" autocomplete="email" autocapitalize="none" spellcheck="false">
       </label>
       <div class="actions">
         <button type="button" id="copiar">Copiar firma para Gmail</button>
@@ -231,12 +231,52 @@
       slogan: "¡Somos alegría!",
       wazeUrl: "https://ul.waze.com/ul?from=place.w.176619666.1766065588.10697752&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location"
     });
+    const lowercaseJobWords = new Set(["a", "al", "con", "de", "del", "e", "el", "en", "la", "las", "los", "para", "por", "y"]);
+    const jobAcronyms = new Set(["BI", "CEO", "CFO", "CIO", "CMO", "COO", "CRM", "CTO", "ERP", "IT", "QA", "RRHH", "TI"]);
     let generatedHtml = "";
     function esc(value) {
       return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
     }
-    function render() {
-      const data = { ...fixedData, ...Object.fromEntries(new FormData(form).entries()) };
+    function normalizeSpaces(value) {
+      return String(value || "").replace(/[\u200B-\u200D\uFEFF]/g, "").trim().replace(/\s+/g, " ");
+    }
+    function normalizeName(value) {
+      return normalizeSpaces(value).toLocaleUpperCase("es-GT");
+    }
+    function normalizeJob(value) {
+      return normalizeSpaces(value).toLocaleLowerCase("es-GT").split(" ").map((word, index) => {
+        const uppercaseWord = word.toLocaleUpperCase("es-GT");
+        if (jobAcronyms.has(uppercaseWord)) return uppercaseWord;
+        if (index > 0 && lowercaseJobWords.has(word)) return word;
+        return word.charAt(0).toLocaleUpperCase("es-GT") + word.slice(1);
+      }).join(" ");
+    }
+    function normalizePhone(value) {
+      const digits = String(value || "").replace(/\D/g, "");
+      const localDigits = digits.length === 11 && digits.startsWith("502") ? digits.slice(3) : digits;
+      return localDigits.length === 8 ? `${localDigits.slice(0, 4)}-${localDigits.slice(4)}` : localDigits;
+    }
+    function normalizeEmail(value) {
+      return normalizeSpaces(value).replace(/\s/g, "").toLocaleLowerCase("en-US");
+    }
+    function getNormalizedData(updateFields = false) {
+      const rawData = Object.fromEntries(new FormData(form).entries());
+      const data = {
+        ...fixedData,
+        nombre: normalizeName(rawData.nombre),
+        cargo: normalizeJob(rawData.cargo),
+        telefono: normalizePhone(rawData.telefono),
+        correo: normalizeEmail(rawData.correo)
+      };
+      if (updateFields) {
+        for (const fieldName of ["nombre", "cargo", "telefono", "correo"]) {
+          form.elements[fieldName].value = data[fieldName];
+        }
+      }
+      return data;
+    }
+    function render(updateFields = false) {
+      const data = getNormalizedData(updateFields);
       const phoneDigits = String(data.telefono || "").replace(/\D/g, "");
       const whatsappNumber = phoneDigits.length === 8 ? `502${phoneDigits}` : phoneDigits;
       const whatsappLink = phoneDigits ? `https://wa.me/${whatsappNumber}` : "https://wa.me/";
@@ -254,9 +294,12 @@
       generatedHtml = html;
       copyStatus.classList.remove("is-visible");
     }
-    form.addEventListener("input", render);
+    form.addEventListener("input", () => render());
+    form.addEventListener("focusout", event => {
+      if (event.target.matches("input")) render(true);
+    });
     document.getElementById("copiar").addEventListener("click", async () => {
-      render();
+      render(true);
       const range = document.createRange();
       range.selectNodeContents(preview);
       const selection = window.getSelection();
@@ -268,7 +311,7 @@
       copyStatus.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
     document.getElementById("descargar").addEventListener("click", () => {
-      render();
+      render(true);
       const blob = new Blob([generatedHtml], { type: "text/html;charset=utf-8" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);

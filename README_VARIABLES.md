@@ -31,6 +31,17 @@ DIRECCION = 15 Calle A 7-53, Zona 9, Guatemala
 SLOGAN = ¡Somos alegría!
 ```
 
+## Normalización automática
+
+Antes de copiar o descargar la firma, el generador:
+
+- elimina espacios sobrantes y caracteres invisibles;
+- convierte el nombre a mayúsculas;
+- aplica capitalización uniforme al cargo y conserva siglas comunes;
+- convierte teléfonos locales o con prefijo `502` al formato `0000-0000`;
+- convierte el correo a minúsculas y elimina espacios internos;
+- usa el número completo con código `502` para el enlace de WhatsApp.
+
 Valores usados para la prueba:
 
 ```text
